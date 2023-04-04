@@ -74,17 +74,19 @@ function getPlayerStats() {
               })
               .then(function(data) {
                 let playerStats = data['data'];
-                let playerStatsTitle = $('<h3>').text("Top 3 Season Leaders");
-                let cardContainer = $('<div>').addClass("card col-lg-12 col-md-4 col-sm-4 col-xs-4");
+                let cardContainer = $('<div>').addClass("card col-lg-12 col-md-4");
                 let cardHeader = $('<h5>').text(indexPlayers[i]);
-                let cardBody = $('<p>').text("Points:\n " + playerStats[0].pts + "\nRebounds: \n" + playerStats[0].reb + "\nAssists: \n" + playerStats[0].ast);
-                let image = $("<img>").attr("src", images[indeximages[i]])
+                let cardBody = $('<div>')
+                let cardFooter = $.text("Points:\n " + playerStats[0].pts + "\nRebounds: \n" + playerStats[0].reb + "\nAssists: \n" + playerStats[0].ast);
+                let image = $("<img>").addClass('card-img-top')/attr("src", images[indeximages[i]])
                   
                 // Append the card container to the player stats element
                 playerStatsElement.append(cardContainer);
 
                 // Append the card elements to the card
-                cardContainer.append(cardHeader, cardBody);
+                cardBody.append(image, cardHeader, cardFooter)
+                cardContainer.append(cardBody);
+                
 
                 // Append the images into the paragraph
                 cardBody.append(image);
@@ -99,7 +101,6 @@ function getPlayerStats() {
 // Function to get the recent game stats and display them in a table.
 function getGameStats(teamID, teamName) {
     // Get the dates to use in balldontlie API query. Yesterday and 30 days ago.
-    var today = dayjs();
     let yesterday = dayjs().subtract(1, 'day');
     var thirtyDaysAgo = dayjs().subtract(30, 'day');
     let yesterdayFormatted = yesterday.format('YYYY-MM-DD');    
@@ -313,8 +314,6 @@ function retrieveLocalSavedTeams() {
     }
 
     document.querySelector('#prevTeam0').textContent = teamHistoryArray[0];
-    document.querySelector('#prevTeam1').textContent = teamHistoryArray[1];
-    document.querySelector('#prevTeam2').textContent = teamHistoryArray[2];
 }
 
 selectedTeam.click(function(event) {
@@ -329,8 +328,6 @@ selectedTeam.click(function(event) {
     localStorage.setItem("localSavedTeams", JSON.stringify(teamHistoryArray));
     
     document.querySelector('#prevTeam0').textContent = teamHistoryArray[0];
-    document.querySelector('#prevTeam1').textContent = teamHistoryArray[1];
-    document.querySelector('#prevTeam2').textContent = teamHistoryArray[2];
 
     //Call the getTeamID function for the selected team to start the API calls for the season stats
     getTeamID(teamName);
