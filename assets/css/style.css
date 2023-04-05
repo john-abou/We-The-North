@@ -4,157 +4,157 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     max-height: 100vh;
-    overflow: scroll;
+    overflow: hidden;
   }
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Style the side bar buttons */
-.custom-button{
-    background-color: rgba(60, 59, 56, 0.919);
-    color: goldenrod;
-    font-weight: bolder;
-    border: 2px solid rgba(60, 59, 56, 1);
-    border-radius: 5px;
-    width: 100%;
-}
-.custom-button:hover{
-    background-color: rgba(60, 59, 56, 0.1);
-    color: goldenrod;
-    font-weight: bolder;
-    border: 2px solid rgba(60, 59, 56, 1);
-    border-radius: 5px;
-    margin-bottom: 1%;
-}
+/* Dropdown menu styling */
+.dropdown-menu {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+
 /* Add spacing to the player stats container */
 #player-stats {
-    margin-top: 5%;
+    background-color: #f5f5f5;
+    border-radius: .5rem;
+    max-height: 80vh;
+    max-width: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
-#player-stats h3 {
-    color: goldenrod;
+#player-stats::-webkit-scrollbar {
+    display: none;
+}
+/* Style the cards */
+#player-stats h5 {
     font-weight: bolder;
-    font-size: 1.5em;
-    margin-bottom: 5%;
+    font-size: 1em;
+    margin: 10% 0;
     text-align: center;
+    overflow: auto;
 }
-/* Style the player cards */
-.card {
-    background-color: rgba(60, 59, 56, 0);
-    border: 0 ;
-    padding: 0.5%;
+#player-stats  p {
+    font-size: .8em;
 }
-.card h5 {
-    font-weight: bold;
-    display: inline-block;
-    float: left;
-    color: rgba(60, 59, 56, 0.919);
+.card{
+    width: 80%;
 }
-.card p {
-    display: flex;
-    font-size: .85em;
-    color: goldenrod;
+.cardTitle {
+    font-weight: bolder;
+    font-size: 1.1em;
+    margin: 0;
 }
-.card p img {
-    margin-right: 10px;
-    width: 35%;
+.cardText{
+    font-size: .8em;
 }
-    
-#historyBtnGroup {
-    color: goldenrod;
-    margin: 5% 0 3% 0;
+
+/* Style the conatiner and title of the recent games table */
+#recent-stats {
+    background-color: #f5f5f5;
+    border-radius: .5rem;
+    max-height: 80vh;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#recent-stats::-webkit-scrollbar {
+    display: none;
+}
+#recent-stats h5 {
+    margin: 2% 0;
+    font-weight: bolder;
+    font-size: 1em;
     text-align: center;
-}
-#historyBtnGroup button {
-    margin-bottom: 1%;
-}
-#last-container{
-    margin-bottom: 0;
-    padding-bottom: 0;
 }
 
 /* Style the tables */
+table::-webkit-scrollbar {
+    display: none;
+}
 table {
     border-collapse: collapse;
-    width: 100%;
-    color: goldenrod;
-    }
-th{
-    background-color: white;
-    color:  rgba(60, 59, 56, 0.919);
-    font-weight: bolder;
-    font-size: 1.3em;
+    width: 95%;
+    max-height: 95%;
+    margin: 0 auto 2% auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
-th, td {
-    border: 2px solid rgba(60, 59, 56, 0.919);
+th {
+    background-color: #F2F2F2;
+    color: #333;
+    font-weight: 500;
+    padding: 10px;
     text-align: center;
-    padding: 8px;
+    font-size: .9em;
+    border-top: 2px solid #C1C1C1;
+    border-bottom: 2px solid #C1C1C1;
+}
+th:first-child, td:first-child {
+    border-right: 1px solid #C1C1C1; /* Apply vertical separator only to the first column */
 }
 td {
-    font-size: 1em;
+    position: relative; /* Add relative positioning */
+    padding: 10px;
+    font-weight: 300;
+    text-align: center;
+    font-size: .75em;
+    border-top: 1px solid #C1C1C1;
+    border-bottom: 1px solid #C1C1C1;
+    color: #333; /* Add color for table data */
 }
 tr:nth-child(even) {
-    background-color: rgba(221, 221, 221, 0.9);
-}
+    background-color: #F9F9F9;
+} 
 tr:nth-child(odd) {
-    background-color: rgba(50, 49, 46, 0.85);
+    background-color: #FFFFFF;
 }
-tr:hover {
-    background-color: rgba(255, 255, 255, 1);
+/* Hover effect */
+tr:hover td {
+    background-color: #E0E0E0;
 }
-
-/* Style the title of the recent games table */
-#recent-stats h3 {
-    color: goldenrod;
-    font-weight: bolder;
-    font-size: 1.75em;
-    margin-bottom: 0.5%;
-    text-align: center;
-}
+  
 
 @media screen and (max-width: 992px) {
-    /* Style the aside element text */
-    aside {
-        text-align: center;
+    /* Style the player and recent games containers */
+    #player-stats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
     }
-
-    /* Style the aside element buttons */
-    .custom-button{
-        width: 35%;
-    }
-    #historyBtnGroup {
-        text-align: center;
+    #recent-stats {
+        max-height: 50vh;
+        max-width: 100%;
     }
 
     /* Style the title of the cards */
-    #player-stats h3 {
-        font-size: 1.3em;
-        margin-bottom: 1%;
+    #player-stats h5 {
         text-align: center;
-    }
-
-    /* Style the player cards */
-    .card {
-        margin: 0%;
-        display: inline-block;
-    }
-    .dropdown{
-        display: inline-block;
+        margin: 1% 0;
         width: 100%;
     }
+    /* Style the player cards */
+    .card {
+        flex: 0 0 20%; /* Set the width of each card to 20% */
+        margin: 0; /* Reset margin */
+    }
+    .card img{ 
+        width: 30%;
+    }
     .card h5 {
-        font-size: 1.15em;
-        float: none;
+        font-size: .9em;
     }
     .card p {
-        font-size: 1em;
+        font-size: .8em;
         margin: 0 10%;
     }
 
     /* Style the tables */
-    #recent-stats {
-        font-size: 1.3em;
-    }
     table {
         margin: 0 2%;
     }
@@ -164,6 +164,12 @@ tr:hover {
     td {
         font-size: 0.75em;
     }
+    td:first-child {
+        border-right: none;
+    }
+    th:first-child, td:first-child {
+        border-right: 1px solid #C1C1C1; /* Apply vertical separator only to the first column */
+    }
 }
 
 @media screen and (max-width: 786px) {
@@ -171,38 +177,32 @@ tr:hover {
         margin: 0 5%;
         font-size: 0.85em;
     }
+    th:first-child, td:first-child {
+        border-right: 1px solid #C1C1C1; /* Apply vertical separator only to the first column */
+    }
 }
 
 @media screen and (max-width: 576px) { 
     /* Style the title of the cards */
-    #player-stats h3 {
-        font-size: 1em;
+    #player-stats {
+        display: none;
     }
-
-    /* Style the aside element buttons */
-    .custom-button{
-        font-size: 0.75em;
-        width: 35%;
-    }
-    .card {
-        width: 75%;
-    }
-    .card p {
-        margin: 0 2%;
-        font-size: 0.75em;
+    #recent-stats {
+        max-height: 80vh;
+        max-width: 100%;
     }
 
     /* Style the tables */
     #recent-stats h3 {
         font-size: 1em;
     }
-    table{
-        margin: 1% 0%;
-    };
     th {
         font-size: 0.7em;
     }
     td {
-        font-size: 0.55em;
+        font-size: 0.6em;
+    }
+    th:first-child, td:first-child {
+        border-right: 1px solid #C1C1C1; /* Apply vertical separator only to the first column */
     }
 }

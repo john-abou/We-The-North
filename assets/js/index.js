@@ -56,53 +56,61 @@ function getTeamID(teamName) {
 }
 
 // Function to get the top player stats displayed in the aside element (sidebar)
+// URL: https://www.espn.com/nba/stats/player   
 function getPlayerStats() {
     indexPlayers = Object.keys(players);
-    indeximages = Object.keys(images)
-
-    for (var i=0; i < indexPlayers.length; i++) {
-        (function(i) {
-          // Define the query URL
-          let avgstatsQueryURL = "https://www.balldontlie.io/api/v1/season_averages?player_ids[]=" + players[indexPlayers[i]] +  "&per_page=100";
-      
-          fetch(avgstatsQueryURL)
-              .then(function(response) {
-                  if (!response.ok) {
-                      throw response.json();
-                  }
-                  return response.json();
-              })
-              .then(function(data) {
-                let playerStats = data['data'];
-                let cardContainer = $('<div>').addClass("card col-lg-12 col-md-4");
-                let cardHeader = $('<h5>').text(indexPlayers[i]);
-                let cardBody = $('<div>')
-                let cardFooter = $.text("Points:\n " + playerStats[0].pts + "\nRebounds: \n" + playerStats[0].reb + "\nAssists: \n" + playerStats[0].ast);
-                let image = $("<img>").addClass('card-img-top')/attr("src", images[indeximages[i]])
-                  
-                // Append the card container to the player stats element
-                playerStatsElement.append(cardContainer);
-
-                // Append the card elements to the card
-                cardBody.append(image, cardHeader, cardFooter)
-                cardContainer.append(cardBody);
-                
-
-                // Append the images into the paragraph
-                cardBody.append(image);
-              });
-        })(i);
-    }
+    indexImages = Object.keys(images);
+  
     // Append the title of the card containers to the player stats element
-    let playerStatsTitle = $('<h3>').text("Top 3 Season Leaders");
-    playerStatsElement.append(playerStatsTitle); 
-}
+    let playerStatsTitle = $('<h5>').text("Season Leaders");
+    playerStatsElement.append(playerStatsTitle);
+  
+    for (let i = 0; i < indexPlayers.length; i++) {
+      // Define the query URL
+      let avgStatsQueryURL =
+        "https://www.balldontlie.io/api/v1/season_averages?player_ids[]=" +
+        players[indexPlayers[i]] +
+        "&per_page=100";
+  
+      fetch(avgStatsQueryURL)
+        .then(function (response) {
+          if (!response.ok) {
+            throw response.json();
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          console.log("made it to the fetch");
+          let playerStats = data["data"];
+          console.log(playerStats);
+          let cardContainer = $("<div>").addClass("card col-lg-4 col-md-4 mx-auto mb-2");
+          let cardHeader = $("<h5>").text(indexPlayers[i]).addClass("card-title");
+          let cardBody = $("<div>").addClass("card-body mx-auto px-0 text-center").attr('style','width: 90%');
+          let cardText1 = $("<p>").text("PTS: " + playerStats[0].pts).addClass("mt-1 mb-0");
+          let cardText2 = $("<p>").text("REB: " + playerStats[0].reb).addClass("mt-1 mb-0");
+          let cardText3 = $("<p>").text("AST: " + playerStats[0].ast).addClass("mt-1 mb-0");
+          let cardText = $("<div>").addClass('text-center cardText').append(cardText1, cardText2, cardText3);
+          let image = $("<img>").addClass("card-img-top").attr("src", images[indexImages[i]]).attr('width', '25px');
+  
+          // Append the card container to the player stats element
+          playerStatsElement.append(cardContainer);
+  
+          // Append the card elements to the card
+          cardBody.append(image, cardHeader, cardText);
+          cardContainer.append(cardBody);
+        })
+        .catch(function (error) {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }
+  
 
 // Function to get the recent game stats and display them in a table.
 function getGameStats(teamID, teamName) {
     // Get the dates to use in balldontlie API query. Yesterday and 30 days ago.
     let yesterday = dayjs().subtract(1, 'day');
-    var thirtyDaysAgo = dayjs().subtract(30, 'day');
+    var thirtyDaysAgo = dayjs().subtract(60, 'day');
     let yesterdayFormatted = yesterday.format('YYYY-MM-DD');    
     var thirtyDaysAgoFormatted = thirtyDaysAgo.format('YYYY-MM-DD');
 
@@ -138,7 +146,7 @@ function getGameStats(teamID, teamName) {
             recentGamesElement.empty();
 
             // Create and append a header to the table
-            let tableHeader = $('<h3>').text( teamName + " Last 10 Games");
+            let tableHeader = $('<h5>').text( teamName + " Recent Games");
             recentGamesElement.append(tableHeader);
 
 
@@ -162,7 +170,7 @@ function getGameStats(teamID, teamName) {
             table.append( tableBody );
 
             // Loop through the games and add them to the table
-            for (let game = 0; game < 10; game++) {
+            for (let game = 0; game < 20; game++) {
                 // Create the table cells and append them to the table row
                 let gameDate = gamesObject[game].date;
                 let formattedGameDate = dayjs(gameDate).format("ddd, MMM D");
@@ -278,7 +286,7 @@ function getUpcomingGames(teamName) {
                 let rowDataGameDateTime = $('<td>').text(formattedGameDate + " " + formattedGameTime);
                 let rowDataTitle = $('<td>').text(title);
                 let rowDataVenueLocation = $('<td>').text(venue + " " + location);
-                let rowDataBuyTickets = $('<td>').html("<a href=" + ticketURL + " target='_blank'><button>Starting at $"+ minPrice + "</button></a>");
+                let rowDataBuyTickets = $('<td>').html("<a href=" + ticketURL + " target='_blank'><button class='btn-sm btn-outline-dark'>Starting at $"+ minPrice + "</button></a>");
 
                 rowData.append(rowDataGameDateTime, rowDataTitle, rowDataVenueLocation, rowDataBuyTickets);
                 }
